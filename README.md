@@ -24,6 +24,8 @@ For more details, please refer to the Paper.
 <img src="readme_imgs/results.jpg" width="1500px">
 
 ### Video Translation
+<img src="readme_imgs/volcano.gif" width="400px">
+<img src="readme_imgs/birds.gif" width="400px">
 
 ## Code:
 
@@ -37,6 +39,14 @@ python train.py --input_a ./208.jpg --input_b ./209.jpg --gpu_id 0 --out ./outpu
 ```
 For other images, just replace input_a and input_b.
 
+In many cases it is possible to improve results quality using the one of the following hyperparameter change:
+```
+--beta 10.0
+```
+```
+--min_size 25
+```
+
 ### Refinement
 Soon
 
@@ -44,8 +54,9 @@ Soon
 Soon
 
 ### Text Transfer:
-Soon
-
+```
+python train.py --input_a ./108.png --input_b ./109.png --gpu_id 0 --out ./output3/ --beta 10.0 --alpha 1.0 --min_size 25
+```
 ### Style Transfer:
 Soon
 
@@ -55,7 +66,7 @@ python train.py --input_a ./8.png --input_b ./9.png --gpu_id 0 --out ./output2/ 
 ```
 
 ### Video Translation:
-Soon
+
 
 ## Citation
 If you found this work useful, please cite.
