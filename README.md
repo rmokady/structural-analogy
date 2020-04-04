@@ -18,10 +18,10 @@ images A and B only: guided image synthesis, style and texture transfer, text tr
 
 For more details, please refer to the Paper.
 
-<img src="images/teaser.jpg" width="500px">
+<img src="readme_imgs/teaser.jpg" width="500px">
 
 ### Applications
-<img src="images/results.jpg" width="1500px">
+<img src="readme_imgs/results.jpg" width="1500px">
 
 ### Video Translation
 
@@ -50,7 +50,9 @@ Soon
 Soon
 
 ### Texture Transfer:
-Soon
+```
+python train.py --input_a ./8.png --input_b ./9.png --gpu_id 0 --out ./output2/ --beta 10.0 --alpha 1.0
+```
 
 ### Video Translation:
 Soon
