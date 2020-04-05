@@ -34,7 +34,7 @@ Python 3.7, Pytorch 1.4.0, argparse, Pillow 7.0.0, Scipy 1.4.1, skimage 0.16.2, 
 ### Structural Analogy:
 You can train using the following command:
 ```
-python train.py --input_a ./208.jpg --input_b ./209.jpg --gpu_id 0 --out ./output0/ --beta 10.0 --alpha 1.0
+python train.py --input_a ./images/208.jpg --input_b ./images/209.jpg --gpu_id 0 --out ./output0/ --beta 10.0 --alpha 1.0
 ```
 For other images, just replace input_a and input_b.
 
@@ -47,21 +47,37 @@ In many cases it is possible to improve results quality using the one of the fol
 ```
 
 ### Refinement
-Soon
+In some cases, the quality of the result can be improved using refinement. You can refine your results using [SinGAN](https://webee.technion.ac.il/people/tomermic/SinGAN/SinGAN.htm) in the following way:
+Let "ab.png" the image that we want to refine using the original image "b.png" (i.e. "ab.png" should have the same patch distribution as "b.png").
+First clone SinGAN repository
+```
+git clone https://github.com/tamarott/SinGAN
+```
+Then train a SinGAN network with "b.png" as input
+```
+python main_train.py --input_dir ./ --input_name b.png
+```
+You can refine using the command:
+```
+python paint2image.py --input_dir ./ --input_name b.png --ref_dir ./ --ref_name ab.png --paint_start_scale 4
+```
+Where paint_start_scale is a hyperparameter, and it is recommended to try several values.
+
+More details about SinGAN implementation can be found at the [repository](https://github.com/tamarott/SinGAN).
 
 ### Sketch to Image:
 Soon
 
 ### Text Transfer:
 ```
-python train.py --input_a ./108.png --input_b ./109.png --gpu_id 0 --out ./output3/ --beta 10.0 --alpha 1.0 --min_size 25
+python train.py --input_a ./images/108.png --input_b ./images/109.png --gpu_id 0 --out ./output3/ --beta 10.0 --alpha 1.0 --min_size 25
 ```
 ### Style Transfer:
 Soon
 
 ### Texture Transfer:
 ```
-python train.py --input_a ./8.png --input_b ./9.png --gpu_id 0 --out ./output2/ --beta 10.0 --alpha 1.0
+python train.py --input_a ./images/8.png --input_b ./images/9.png --gpu_id 0 --out ./output2/ --beta 10.0 --alpha 1.0
 ```
 
 ### Video Translation:
