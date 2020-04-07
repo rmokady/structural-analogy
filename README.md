@@ -88,6 +88,21 @@ python train.py --input_a ./images/8.png --input_b ./images/9.png --gpu_id 0 --o
 ## Citation
 If you found this work useful, please cite.
 
+@article{structuralanalogy2020,
+  author    = {Sagie Benaim and
+               Ron Mokady and
+               Amit Bermano and
+               Daniel Cohen-Or and
+               Lior Wolf},
+  title     = {Structural-analogy from a Single Image Pair},
+  journal   = {CoRR},
+  volume    = {abs/2004.02222},
+  year      = {2020},
+  url       = {https://arxiv.org/abs/2004.02222},
+  archivePrefix = {arXiv},
+  eprint    = {2004.02222},
+}
+
 ## Contact
 For further questions, ron.mokady@gmail.com or sagiebenaim@gmail.com.
 
