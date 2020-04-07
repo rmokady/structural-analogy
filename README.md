@@ -88,6 +88,7 @@ python train.py --input_a ./images/8.png --input_b ./images/9.png --gpu_id 0 --o
 ## Citation
 If you found this work useful, please cite.
 
+```
 @article{structuralanalogy2020,
   author    = {Sagie Benaim and
                Ron Mokady and
@@ -102,6 +103,7 @@ If you found this work useful, please cite.
   archivePrefix = {arXiv},
   eprint    = {2004.02222},
 }
+```
 
 ## Contact
 For further questions, ron.mokady@gmail.com or sagiebenaim@gmail.com.
