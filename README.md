@@ -2,7 +2,7 @@
 
 Pytorch implementation for the paper "Structural-analogy from a Single Image Pair".
 
-## [Project Webpage](https://sagiebenaim.github.io/structural-analogy/)
+## For more details, please refer to the [Project Webpage](https://sagiebenaim.github.io/structural-analogy/)
 
 Abstract: The task of unsupervised image-to-image translation has seen substantial advancements in recent years through the use of deep neural networks.
 Typically, the proposed solutions learn the characterizing distribution of two large,
@@ -16,8 +16,6 @@ analogies are produced, which determines the conceptual distinction between
 style and content. In addition to structural alignment, our method can be used
 to generate high quality imagery in other conditional generation tasks utilizing
 images A and B only: guided image synthesis, style and texture transfer, text translation as well as video translation.
-
-For more details, please refer to the [Project Webpage](https://sagiebenaim.github.io/structural-analogy/).
 
 <img src="readme_imgs/teaser.jpg" width="500px">
 
