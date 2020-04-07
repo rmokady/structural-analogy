@@ -81,6 +81,17 @@ python train.py --input_a ./images/8.png --input_b ./images/9.png --gpu_id 0 --o
 ```
 
 ### Video Translation:
+Soon
+
+### Structural Analogy Evaluation (Inference):
+Usually evaluation is not necessary! because the trianing code already produce the desired output.
+If one use larger min_size argument the result would be aligned to fake sample which will be different from the real output, in this case it is usefull to evaluate over the real image.
+Evaluation is better when we inject the real image into one of the scales and then refine it using the generators before translating to the other domain.
+You can use the following command:
+```
+python eval.py --input_a ./208.jpg --input_b ./209.jpg --gpu_id 0 --out ./eval_output0/ --load ./output0/ --min_size 18 --img_size 220 
+```
+Make sure to use the same min_size and img_size as in the training phase.
 
 
 ## Citation
