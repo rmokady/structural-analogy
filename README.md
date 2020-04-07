@@ -40,7 +40,7 @@ For other images, just replace input_a and input_b.
 
 In many cases it is possible to improve results quality using the one of the following hyperparameter change:
 ```
---beta 10.0
+--beta 1.0
 ```
 ```
 --min_size 25
