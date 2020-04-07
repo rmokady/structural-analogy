@@ -2,7 +2,7 @@
 
 Pytorch implementation for the paper "Structural-analogy from a Single Image Pair".
 
-## For more details, please refer to the [Project Webpage](https://sagiebenaim.github.io/structural-analogy/)
+## For more details, please refer to the [Project Webpage](https://sagiebenaim.github.io/structural-analogy/).
 
 Abstract: The task of unsupervised image-to-image translation has seen substantial advancements in recent years through the use of deep neural networks.
 Typically, the proposed solutions learn the characterizing distribution of two large,
