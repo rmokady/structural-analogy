@@ -73,7 +73,9 @@ Soon
 python train.py --input_a ./images/108.png --input_b ./images/109.png --gpu_id 0 --out ./output3/ --beta 10.0 --alpha 1.0 --min_size 25
 ```
 ### Style Transfer:
-Soon
+```
+python train.py --input_a ./images/10.png --input_b ./images/11.png --gpu_id 0 --out ./output3/ --beta 10.0 --alpha 1.0
+```
 
 ### Texture Transfer:
 ```
