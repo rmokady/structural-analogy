@@ -66,7 +66,13 @@ Where paint_start_scale is a hyperparameter, and it is recommended to try severa
 More details about SinGAN implementation can be found at the [repository](https://github.com/tamarott/SinGAN).
 
 ### Sketch to Image:
-Soon
+```
+python train.py --input_a ./309.png --input_b ./308.png --gpu_id 7 --out ./output5/ --beta 10.0 --alpha 1.0 --lr_d 0.0005 --lr_g 0.0001 --lambda_g 0.1
+```
+Note that input_b should be the sketch.
+In many cases refinement is useful (see the above instructions) 
+
+
 
 ### Text Transfer:
 ```
@@ -74,7 +80,7 @@ python train.py --input_a ./images/108.png --input_b ./images/109.png --gpu_id 0
 ```
 ### Style Transfer:
 ```
-python train.py --input_a ./images/10.png --input_b ./images/11.png --gpu_id 0 --out ./output3/ --beta 10.0 --alpha 1.0
+python train.py --input_a ./images/10.png --input_b ./images/11.png --gpu_id 0 --out ./output4/ --beta 10.0 --alpha 1.0
 ```
 
 ### Texture Transfer:
