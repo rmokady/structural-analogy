@@ -83,7 +83,31 @@ python train.py --input_a ./images/8.png --input_b ./images/9.png --gpu_id 0 --o
 ```
 
 ### Video Translation:
-Soon
+```
+cd video
+```
+Video to images:
+```
+python video2imgs.py --input ../video_data/volcano_video.mp4 --out ./volcano_imgs/
+```
+In some cases, quantization of the images helps achieving better results (not true for most cases).
+For quantization:
+```
+python quant_vid.py --root_dir ./volcano_imgs/ --out ./volacno_q0/ --quant_level 2
+```
+Where quant_level control the level of quantisation (higher increase the amount of colors).
+Training:
+```
+python train_video.py --video_dir ./volcano_q0/ --num_images 250 --input_b ../images/10.png --gpu_id 6 --out ./vid_out/ --vid_ext .png --min_size 25 --niter 25000
+```
+Evaluation:
+```
+python eval_video.py --video_dir ./volcano_q0/ --num_images 250 --gpu_id 6 --out ./eval_vid_out/ --load ./vid_out/ --min_size 25 --vid_ext '.png' --add_inject True --inject_level 8 --a2b True
+```
+Images to video:
+```
+python3 imgs2video.py --input ./eval_vid_out/ --out ~/Downloads/vid_out.avi --fps 25.0 --frames 250
+```
 
 ### Structural Analogy Evaluation (Inference):
 Usually evaluation is not necessary! because the trianing code already produce the desired output.
