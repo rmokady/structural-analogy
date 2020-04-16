@@ -45,7 +45,9 @@ In many cases it is possible to improve results quality using one of the followi
 ```
 --min_size 25
 ```
-
+```
+--nfc 128 --min_nfc 128
+```
 ### Refinement
 In some cases, the quality of the result can be improved using refinement. You can refine your results using [SinGAN](https://webee.technion.ac.il/people/tomermic/SinGAN/SinGAN.htm) in the following way:
 Let "ab.png" the image that we want to refine using the original image "b.png" (i.e. "ab.png" should have the same patch distribution as "b.png").
