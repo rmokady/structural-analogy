@@ -22,6 +22,7 @@ def draw_concat(Gs,reals, NoiseAmp, in_s, mode, opt):
         if mode == 'rand':
             count = 0
             for G,real_curr,real_next,noise_amp in zip(Gs,reals,reals[1:],NoiseAmp):
+                G = G.cuda()
                 if count == 0:
                     z = generate_noise2([1, 3, real_curr.shape[2], real_curr.shape[3]], device=opt.device)
                     G_z = in_s
@@ -41,6 +42,7 @@ def draw_concat(Gs,reals, NoiseAmp, in_s, mode, opt):
         if mode == 'rec':
             count = 0
             for G,real_curr,real_next,noise_amp in zip(Gs,reals,reals[1:],NoiseAmp):
+                G = G.cuda()
                 if count == 0:
                     size = list(real_curr.size())
                     #print(size)
@@ -55,19 +57,16 @@ def draw_concat(Gs,reals, NoiseAmp, in_s, mode, opt):
                 count += 1
     return G_z
 
+
 def init_models(opt):
 
     #generator initialization:
     netG = models.Generator_no_res(opt).to(opt.device)
     netG.apply(models.weights_init)
-    if opt.netG != '':
-        netG.load_state_dict(torch.load(opt.netG))
 
     #discriminator initialization:
     netD = models.WDiscriminator(opt).to(opt.device)
     netD.apply(models.weights_init)
-    if opt.netD != '':
-        netD.load_state_dict(torch.load(opt.netD))
 
     return netD, netG
 
@@ -76,14 +75,10 @@ def init_models_res(opt):
     # generator initialization:
     netG = models.Generator(opt).to(opt.device)
     netG.apply(models.weights_init)
-    if opt.netG != '':
-        netG.load_state_dict(torch.load(opt.netG))
 
     # discriminator initialization:
     netD = models.WDiscriminator(opt).to(opt.device)
     netD.apply(models.weights_init)
-    if opt.netD != '':
-        netD.load_state_dict(torch.load(opt.netD))
 
     return netD, netG
 
@@ -114,8 +109,7 @@ if __name__ == '__main__':
     parser.add_argument('--not_cuda', action='store_true', help='disables cuda', default=0)
 
     # load, input, save configurations:
-    parser.add_argument('--netG', default='', help="path to netG (to continue training)")
-    parser.add_argument('--netD', default='', help="path to netD (to continue training)")
+    parser.add_argument('--load', default='', help="path to continue training")
     parser.add_argument('--manualSeed', type=int, help='manual seed')
     parser.add_argument('--nc_z', type=int, help='noise # channels', default=3)
     parser.add_argument('--nc_im', type=int, help='image # channels', default=3)
@@ -203,6 +197,19 @@ if __name__ == '__main__':
     opt.nzy = size_arr[0]
     in_s = torch.full([1, opt.nc_z,opt.nzx,opt.nzy], 0, device=opt.device)
 
+    if opt.load != '':
+        Gs_a = torch.load('%s/Gs_a.pth' % opt.load)
+        Gs_b = torch.load('%s/Gs_b.pth' % opt.load)
+        NoiseAmp_a = torch.load('%s/NoiseAmp_a.pth' % opt.load)
+        NoiseAmp_b = torch.load('%s/NoiseAmp_b.pth' % opt.load)
+        scale_num = len(Gs_a)
+        opt.noise_amp_a = NoiseAmp_a[-1]
+        opt.noise_amp_b = NoiseAmp_b[-1]
+        print("Loading until scale " + str(scale_num))
+        nfc_prev = min(opt.nfc_init * pow(2, math.floor((scale_num-1) / 4)), 128)
+    else:
+        opt.load = opt.out
+
     while scale_num < opt.stop_scale + 1:
 
         opt.nfc = min(opt.nfc_init * pow(2, math.floor(scale_num / 4)), 128)
@@ -218,11 +225,12 @@ if __name__ == '__main__':
             print("Residual layer")
 
         if nfc_prev == opt.nfc:
-            print("Load weights of last layer")
-            G_a.load_state_dict(torch.load('%s/netG_a_%d.pth' % (opt.out, scale_num-1)))
-            D_a.load_state_dict(torch.load('%s/netD_a_%d.pth' % (opt.out, scale_num-1)))
-            G_b.load_state_dict(torch.load('%s/netG_b_%d.pth' % (opt.out, scale_num-1)))
-            D_b.load_state_dict(torch.load('%s/netD_b_%d.pth' % (opt.out, scale_num-1)))
+            print("Load weights of last layer " + str(scale_num-1))
+            G_a.load_state_dict(torch.load('%s/netG_a_%d.pth' % (opt.load, scale_num-1)))
+            D_a.load_state_dict(torch.load('%s/netD_a_%d.pth' % (opt.load, scale_num-1)))
+            G_b.load_state_dict(torch.load('%s/netG_b_%d.pth' % (opt.load, scale_num-1)))
+            D_b.load_state_dict(torch.load('%s/netD_b_%d.pth' % (opt.load, scale_num-1)))
+        opt.load = opt.out
 
         optimizerD = optim.Adam(list(D_a.parameters()) + list(D_b.parameters()), lr=opt.lr_d, betas=(opt.beta1, 0.999))
         optimizerG = optim.Adam(list(G_a.parameters()) + list(G_b.parameters()), lr=opt.lr_g, betas=(opt.beta1, 0.999))
@@ -245,7 +253,6 @@ if __name__ == '__main__':
 
             real_b = data_b[len(Gs_b)].cuda()
 
-            #Create fake from noise
             noise_ = generate_noise2([1, opt.nc_z, opt.nzx, opt.nzy], device=opt.device)
 
             if Gs_a == []:
@@ -278,7 +285,7 @@ if __name__ == '__main__':
 
             if epoch == 0 and i == 0:
                 if Gs_a == []:
-                    opt.noise_amp_a = 1
+                    opt.noise_amp_a = opt.noise_amp_init
                 else:
                     criterion = nn.MSELoss()
                     RMSE = torch.sqrt(criterion(real_a, z_prev_a))
@@ -291,7 +298,7 @@ if __name__ == '__main__':
 
             if epoch == 0 and i == 0:
                 if Gs_b == []:
-                    opt.noise_amp_b = 1
+                    opt.noise_amp_b = opt.noise_amp_init
                 else:
                     criterion = nn.MSELoss()
                     RMSE = torch.sqrt(criterion(real_b, z_prev_b))
@@ -404,7 +411,7 @@ if __name__ == '__main__':
 
             optimizerG.step()
 
-            if epoch % opt.print_interval == 0:
+            if (epoch+1) % opt.print_interval == 0:
                 vutils.save_image(fake_a.clone(), osp.join(opt.out, str(scale_num) + "_fake_a_" + str(epoch) + ".png"), normalize=True)
                 vutils.save_image(mix_g_a.clone(), osp.join(opt.out, str(scale_num) + "_b2a_" + str(epoch) + ".png"),
                                   normalize=True)
@@ -455,7 +462,7 @@ if __name__ == '__main__':
 
         print("Layer weights saved successfully")
 
-        scale_num+=1
+        scale_num += 1
         nfc_prev = opt.nfc
         del D_a, G_a
         del D_b, G_b
