@@ -122,7 +122,7 @@ python train_video.py --video_dir ./video/volcano_q0/ --num_images 250 --input_b
 ```
 Evaluation:
 ```
-python eval_video.py --video_dir ./volcano_q0/ --num_images 250 --gpu_id 6 --out ./eval_vid_out/ --load ./vid_out/ --min_size 25 --vid_ext '.png' --add_inject True --inject_level 8 --a2b True
+python eval_video.py --video_dir ./video/volcano_q0/ --num_images 250 --gpu_id 6 --out ./video/eval_vid_out/ --load ./video/vid_out/ --min_size 25 --vid_ext '.png' --add_inject True --inject_level 8 --a2b True
 ```
 Images to video:
 ```
