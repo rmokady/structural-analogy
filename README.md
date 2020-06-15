@@ -110,12 +110,15 @@ python video2imgs.py --input ../video_data/volcano_video.mp4 --out ./volcano_img
 In some cases, quantization of the images helps to achieve better results (not true for most cases).
 For quantization:
 ```
-python quant_vid.py --root_dir ./volcano_imgs/ --out ./volacno_q0/ --quant_level 2
+python quant_vid.py --root_dir ./volcano_imgs/ --out ./volcano_q0/ --quant_level 2
 ```
 Where quant_level control the level of quantization (higher increase in the number of colors).
 Training:
 ```
-python train_video.py --video_dir ./volcano_q0/ --num_images 250 --input_b ../images/10.png --gpu_id 6 --out ./vid_out/ --vid_ext .png --min_size 25 --niter 25000
+cd -
+```
+```
+python train_video.py --video_dir ./video/volcano_q0/ --num_images 250 --input_b ./images/10.png --gpu_id 6 --out ./video/vid_out/ --vid_ext .png --min_size 25 --niter 25000
 ```
 Evaluation:
 ```
