@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
     for f in files:
         img_name = os.path.join(args.root_dir, f)
-        image = Image.open(img_name).convert('L')
+        image = Image.open(img_name).convert('L').convert('RGB')
         image = ImageOps.invert(image)
         sample = transform(image)
 
