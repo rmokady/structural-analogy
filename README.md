@@ -151,12 +151,12 @@ If you found this work useful, please cite.
                Daniel Cohen-Or and
                Lior Wolf},
   title     = {Structural-analogy from a Single Image Pair},
-  journal   = {CoRR},
-  volume    = {abs/2004.02222},
+  journal   = {Computer Graphics Forum},
+  volume    = {n/a},
   year      = {2020},
-  url       = {https://arxiv.org/abs/2004.02222},
-  archivePrefix = {arXiv},
-  eprint    = {2004.02222},
+  doi = {https://doi.org/10.1111/cgf.14186},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/cgf.14186},
+  eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/cgf.14186}
 }
 ```
 
